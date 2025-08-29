@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tee /home/rhel/resource.yml << EOF
+tee /home/rhel/solve_challenege_3.yml << EOF
 
 ---
 - name: configure SNMP
@@ -21,9 +21,8 @@ tee /home/rhel/resource.yml << EOF
               rw: true
             - acl_v4: acl_uq
               name: ChapelHill-community
-              rw: true   
-
-
+              rw: true  
 EOF
 
 
+su - rhel -c 'ansible-navigator run /home/rhel/solve_challenege_3.yml --mode stdout'
