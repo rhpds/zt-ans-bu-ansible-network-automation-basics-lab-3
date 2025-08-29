@@ -63,21 +63,21 @@ systemctl start code-server
 # cat /home/rhel/playbook.yml'
 
 # Write a new playbook to create a template from above playbook
-# su - $USER -c 'cat > /home/rhel/debug.yml << EOF
-# ---
-# - name: print debug
-#   hosts: localhost
-#   gather_facts: no
-#   connection: local
+su - $USER -c 'cat > /home/rhel/debug.yml << EOF
+---
+- name: print debug
+  hosts: localhost
+  gather_facts: no
+  connection: local
 
-#   tasks:
+  tasks:
 
-#     - name: ensure that the desired snmp strings are present
-#       ansible.builtin.debug:
-#         msg: "print to terminal"
+    - name: ensure that the desired snmp strings are present
+      ansible.builtin.debug:
+        msg: "print to terminal"
 
-# EOF
-# cat /home/rhel/debug.yml'
+EOF
+cat /home/rhel/debug.yml'
 
 
 su - $USER -c 'cat > /home/rhel/hosts << EOF
