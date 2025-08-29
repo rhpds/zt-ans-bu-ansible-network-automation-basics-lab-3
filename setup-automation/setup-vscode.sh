@@ -230,9 +230,9 @@ EOF
 
 /usr/local/bin/ansible-playbook /home/rhel/debug.yml
 
-# Setup pod image
-su - $USER -c 'podman pull quay.io/ansible/network-ee:stable-2.12'
+# # Setup pod image
+# su - $USER -c 'podman pull quay.io/ansible/network-ee:stable-2.12'
 
-echo 'shopt -s histappend' >> /home/rhel/.bashrc
-echo 'PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' >> /home/rhel/.bashrc
-update-crypto-policies --set LEGACY
+# echo 'shopt -s histappend' >> /home/rhel/.bashrc
+# echo 'PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' >> /home/rhel/.bashrc
+# update-crypto-policies --set LEGACY
