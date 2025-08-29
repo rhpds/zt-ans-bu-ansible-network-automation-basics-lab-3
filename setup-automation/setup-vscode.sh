@@ -5,11 +5,11 @@ USER=rhel
 # --------------------------------------------------------------
 # Host subscription with satellite
 # --------------------------------------------------------------
-# curl -k  -L https://${SATELLITE_URL}/pub/katello-server-ca.crt -o /etc/pki/ca-trust/source/anchors/${SATELLITE_URL}.ca.crt
-# update-ca-trust
-# rpm -Uhv https://${SATELLITE_URL}/pub/katello-ca-consumer-latest.noarch.rpm
-# subscription-manager register --org=${SATELLITE_ORG} --activationkey=${SATELLITE_ACTIVATIONKEY}
-# setenforce 0
+curl -k  -L https://${SATELLITE_URL}/pub/katello-server-ca.crt -o /etc/pki/ca-trust/source/anchors/${SATELLITE_URL}.ca.crt
+update-ca-trust
+rpm -Uhv https://${SATELLITE_URL}/pub/katello-ca-consumer-latest.noarch.rpm
+subscription-manager register --org=${SATELLITE_ORG} --activationkey=${SATELLITE_ACTIVATIONKEY}
+setenforce 0
 
 # --------------------------------------------------------------
 # Setup Sudoers 
@@ -20,11 +20,11 @@ chmod 440 /etc/sudoers.d/rhel_sudoers
 # --------------------------------------------------------------
 # Setup SSH key
 # --------------------------------------------------------------
-# sudo -u rhel mkdir -p /home/rhel/.ssh
-# sudo -u rhel chmod 700 /home/rhel/.ssh
-# sudo -u rhel rm -rf /home/rhel/.ssh/id_rsa*
-# sudo -u rhel ssh-keygen -t rsa -b 4096 -C "rhel@$(hostname)" -f /home/rhel/.ssh/id_rsa -N ""
-# sudo -u rhel chmod 600 /home/rhel/.ssh/id_rsa*
+sudo -u rhel mkdir -p /home/rhel/.ssh
+sudo -u rhel chmod 700 /home/rhel/.ssh
+sudo -u rhel rm -rf /home/rhel/.ssh/id_rsa*
+sudo -u rhel ssh-keygen -t rsa -b 4096 -C "rhel@$(hostname)" -f /home/rhel/.ssh/id_rsa -N ""
+sudo -u rhel chmod 600 /home/rhel/.ssh/id_rsa*
 
 # --------------------------------------------------------------
 # Reconfigure VS codeserver
