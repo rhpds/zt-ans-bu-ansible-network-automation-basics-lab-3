@@ -45,39 +45,39 @@ systemctl start code-server
 # Setup lab assets
 # --------------------------------------------------------------
 # Write a new playbook to create a template from above playbook
-su - $USER -c 'cat > /home/rhel/playbook.yml << EOF
----
-- name: snmp ro/rw string configuration
-  hosts: cisco
-  gather_facts: no
+# su - $USER -c 'cat > /home/rhel/playbook.yml << EOF
+# ---
+# - name: snmp ro/rw string configuration
+#   hosts: cisco
+#   gather_facts: no
 
-  tasks:
+#   tasks:
 
-    - name: ensure that the desired snmp strings are present
-      cisco.ios.config:
-        commands:
-          - snmp-server community ansible-public RO
-          - snmp-server community ansible-private RW
+#     - name: ensure that the desired snmp strings are present
+#       cisco.ios.config:
+#         commands:
+#           - snmp-server community ansible-public RO
+#           - snmp-server community ansible-private RW
 
-EOF
-cat /home/rhel/playbook.yml'
+# EOF
+# cat /home/rhel/playbook.yml'
 
 # Write a new playbook to create a template from above playbook
-su - $USER -c 'cat > /home/rhel/debug.yml << EOF
----
-- name: print debug
-  hosts: localhost
-  gather_facts: no
-  connection: local
+# su - $USER -c 'cat > /home/rhel/debug.yml << EOF
+# ---
+# - name: print debug
+#   hosts: localhost
+#   gather_facts: no
+#   connection: local
 
-  tasks:
+#   tasks:
 
-    - name: ensure that the desired snmp strings are present
-      ansible.builtin.debug:
-        msg: "print to terminal"
+#     - name: ensure that the desired snmp strings are present
+#       ansible.builtin.debug:
+#         msg: "print to terminal"
 
-EOF
-cat /home/rhel/debug.yml'
+# EOF
+# cat /home/rhel/debug.yml'
 
 
 su - $USER -c 'cat > /home/rhel/hosts << EOF
