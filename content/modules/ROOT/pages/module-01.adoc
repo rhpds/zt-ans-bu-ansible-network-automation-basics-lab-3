@@ -1,160 +1,95 @@
-= Your first Network Ansible Playbook
 
-== For this challenge we will examine an already created Ansible Playbook
+= Verify SNMP configuration
 
-=== Ansible Network Automation Basics
+== For this challenge we will verify the existing configuration on the Cisco
 
-The lab objective is to use Ansible Automation to update the configuration of a Cisco CSR router. This exercise will not create an Ansible Playbook, but use an existing one that has been provided.
+=== Modules
 
-This exercise will cover:
+Modules do the actual work in Ansible, they are what gets executed in each playbook task.
 
-- examining an existing Ansible Playbook
-- executing an Ansible Playbook on the command line using the ansible-navigator command
-- check mode (the `--check` parameter)
-- verbose mode (the `--verbose` or -v parameter)
+* Typically written in Python (but not limited to it)
+* Modules can be idempotent
+* Modules take user input in the form of parameters
 
-=== What makes up an Ansible Playbook?
+image::https://github.com/IPvSean/pictures_for_github/blob/master/resource_module.png?raw=true[picture of task]
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/what_makes_up_playbook.png?raw=true[]
+=== Network modules
 
+Ansible modules for network automation typically references the vendor OS followed by the module name.
 
-=== Ansible Plays
-
-What am I automating?
-
-[source,yaml]
-----
 ---
-- name: configure network devices
-  hosts: network
-  become: yes
-----
 
-*What are they?*
+* namespace.collection.`facts`
+* namespace.collection.`command`
+* namespace.collection.`config`
+* namespace.collection.`resource`
 
-- _Top level specification for a group of tasks._
-
-  Will tell that play which hosts it will execute on and control behavior such as fact gathering or privilege level.
-
-- _Building blocks for playbooks_
-
-  Multiple plays can exist within an Ansible playbook
-
-=== Ansible Modules
-
-_The "tools in the toolkit"_
-
-----
-    - name: ensure that the desired snmp strings are present
-      cisco.ios.config:
-        commands:
-          - snmp-server community ansible-public RO
-          - snmp-server community ansible-private RW
-----
-
-*What are they?*
-
-Parametrized components with internal logic, representing a single step to be done.
-The modules "do" things in Ansible.
-
-*Language*
-
-=== Ansible Plugins
-
-*What are they?*
-Plugins are pieces of code that augment
-Ansible's core functionality. Ansible uses a plugin architecture to enable a rich, flexible, and expandable feature set.
-
-{{ some_variable | `to_nice_json` }} +
-{{ some_variable | `to_nice_yaml` }}
-
-=== Ansible Inventory
-
-*What are they?*
-
-List of systems in your infrastructure that automation is executed against
-
-----
-[web]
-webserver1.example.com
-webserver2.example.com
-
-[db]
-dbserver1.example.com
-
-[switches]
-leaf01.internal.com
-leaf02.internal.com
-----
-
-=== Ansible Roles
-
-[source,yaml]
-----
 ---
-- name: install and start apache
-  hosts: network
-  roles:
-    - network.toolkit.backup
-----
 
-*What are they?*
+.Examples of network vendors:
 
-Group your tasks and variables of your automation in a reusable structure. Write roles once, and share them with others who have similar challenges in front of them.
+* Arista EOS = `arista.eos`
+* Cisco IOS/IOS-XE = `cisco.ios`
+* Cisco NX-OS = `cisco.nxos`
+* Cisco IOS-XR = `cisco.iosxr`
+* F5 BIG-IP = `f5networks.f5_bigip_bigip`
+* Juniper Junos = `junipsnetworks.junos`
+* VyOS = `vyos.vyos`
 
-=== Ansible Content Collections
+.Network Automation Module
+image::https://github.com/IPvSean/pictures_for_github/blob/master/resrouce_modules_slide.png?raw=true[]
 
-_Simplified and consistent content delivery_
-
-*What are they?*
-
-Collections are a directory structure containing automation content such as:
-- Modules
-- Playbooks
-- Roles
-- Plugins
-- Docs
-- Tests
-
+.Network Automation Module
+image::https://github.com/IPvSean/pictures_for_github/blob/master/resrouce_modules_slide2.png?raw=true[]
 
 === Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[width=100px,align=left] in the bottom right corner of this window.
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
 
 
-== Step 1 - Examine Ansible Playbook
+=== Step 1 - Verify SNMP configuration
 
-Open the `playbook.yml` in the code-server tab.
+Login to an Cisco IOS router and verify the current SNMP configuration.
 
-We will explore in detail the components of an Ansible Playbook in the next exercise. It is suffice for now to see that this playbook will run two Cisco IOS-XE commands:
+* From the control node terminal, you can `ssh cisco` and type `enable`
 
-----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
-----
-
-== Step 2 - Execute Ansible Playbook
-
-Open the terminal tab and run the following command:
-
-----
-ansible-navigator run playbook.yml --mode stdout
-----
-
-
-- `--mode stdout` - By default ansible-navigator will run in interactive mode. The default behavior can be modified by modifying the ansible-navigator.yml configuration file. As playbooks get longer and involve multiple hosts the interactive mode allows you to "zoom in" on data in real-time, filter it, and navigate between various Ansible components. Since this task only ran one task on one host the stdout is sufficient.
-
-== Step 3 - Verify configuration on router
-
-Login to the cisco device and run the show run command to check the configuration:
+[source,bash]
 ----
 ssh cisco
-show running | i snmp
 ----
-Output should be similar to the following:
+
+Use the command `show snmp` to examine the SNMP configuration (SNMP should say agent not available):
+
 ----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
+show snmp
+----
+
+It will show output similar to the following:
+
+[source,bash]
+----
+cisco# show snmp
+%SNMP agent not enabled
+----
+
+Use the `show run | s snmp` to examine the SNMP running-configuration on the Cisco device. When running this command expect no output as there is no running SNMP configuration.
+
+----
+show run | s snmp
+----
+
+It will show output similar to the following:
+
+[source,bash]
+----
+cisco#sh run | s snmp
+cisco#
+----
+
+Exit the router CLI to complete the challenge.
+
+----
+exit
 ----

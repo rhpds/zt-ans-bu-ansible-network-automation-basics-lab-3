@@ -1,20 +1,21 @@
-:lab_name: Network automation basics: First playbook
+:lab_name: Network automation basics: Resource modules
 
 
 = image:https://github.com/network-automation/networking-icons/blob/master/switches/switch_red_small.png?raw=true[] {lab_name}
 
 
-Learn the fundamentals of Red Hat Ansible Automation Platform for network automation using ansible-navigator.
+== Ansible Network Automation Basics - Resource Modules
 
-== Ansible Network Automation Basics
 
-The lab objective is to use Ansible Automation to update the configuration of a Cisco CSR router. This exercise will not create an Ansible Playbook, but use an existing one that has been provided.
+- **Lab Objective: Demonstration use of Ansible Resource Modules on network infrastructure**
 
-.*This exercise will cover:*
+Ansible network resource modules simplify and standardize how you manage different network devices. Network devices separate configuration into sections (such as interfaces and VLANs) that apply to a network service.
 
-- examining an existing Ansible Playbook
-- executing an Ansible Playbook on the command line using the ansible-navigator command
-- check mode (the `--check` parameter)
-- verbose mode (the `--verbose` or -v parameter)
 
-image:https://github.com/network-automation/networking-icons/blob/master/switches/switch_red_small.png?raw=true[]
+This exercise will cover:
+
+* Configuring SNMP on Cisco IOS
+* Building an Ansible Playbook using the link:https://docs.ansible.com/ansible/latest/collections/cisco/ios/ios_snmp_server_module.html#ansible-collections-cisco-ios-ios-snmp-server-module[cisco.ios.snmp_server module].
+* Understanding the `state: merged`
+* Understanding the `state: gathered`
+

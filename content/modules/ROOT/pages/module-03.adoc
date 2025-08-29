@@ -1,137 +1,114 @@
-= Validate idempotency
+= Execute the Ansible Playbook
 
-== The best playbooks are idempotent playbooks
+== Learn how to use facts with the debug module
 
-. More about Modules
+image::https://github.com/IPvSean/pictures_for_github/blob/master/ansible-navigator.png?raw=true[picture of ansible-navigator]
 
-+
-Modules do the actual work in Ansible, they are what gets executed in each playbook task.
+https://docs.google.com/presentation/d/1F-nc9dKXemdD5FJXNQoaEZzp_eADTSDKpXLLu4jYapI/edit?usp=sharing
 
-- Typically written in Python (but not limited to it)
-- Modules can be idempotent
-- Modules take user input in the form of parameters
 
-. Network modules
-+
-Ansible modules for network automation typically references the vendor OS followed by the module name.
+image::https://github.com/IPvSean/pictures_for_github/blob/master/ansible-navigator-2.png?raw=true[2nd picture of ansible-navigator]
 
-- `namespace.collection.facts`
-- `namespace.collection.command`
-- `namespace.collection.config`
-- `namespace.collection.resource`
-
-+
-*For example:*
-- Arista EOS = `arista.eos.`
-- Cisco IOS/IOS-XE = `cisco.ios.`
-- Juniper Junos = `junipsnetworks.junos.`
-
-.Lets get started
+=== Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[width="100px" align="left"] in the bottom right corner of this window.
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
 
+=== Step 1
 
+Switch to the Terminal tab so you can execute your Ansible Playbook.
 
+=== Step 2 - Execute the Ansible Playbook
 
-== Step 1 - Validate idempotency
-
-The `cisco.ios.config` module is idempotent. This means, a configuration change is pushed to the device if and only if that configuration does not exist on the end hosts.
-
-[cols="1"]
-|===
-| *Need help with Ansible Automation terminology?*
-| Check out the https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html[glossary here] for more information on terms like idempotency.
-|===
-
-To validate the concept of idempotency, re-run the playbook:
+Execute the playbook using the `ansible-navigator run`. Since there is just one task we can use the --mode stdout
 
 ----
-ansible-navigator run playbook.yml --mode stdout
+ansible-navigator run resource.yml --mode stdout
 ----
 
-[cols="1"]
-|===
-| *NOTE:*
-| See that the *changed parameter* in the *PLAY RECAP* indicates 0 changes.
-|===
+The output will look similar to the following:
 
-Re-running the Ansible Playbook multiple times will result in the same exact output, with *ok=1* and *change=0*.
+image::https://github.com/IPvSean/pictures_for_github/blob/master/playbook_output_lab_4.png?raw=true[picture of playbook output]
 
-Unless another operator or process removes or modifies the existing configuration on rtr1, this Ansible Playbook will just keep reporting ok=1 indicating that the configuration already exists and is configured correctly on the network device.
-
-== Step 2 - Modify Ansible Playbook
-
-Now update the task to add one more SNMP RO community string named ansible-test.
+Re-running the playbook will demonstrate the concept of https://en.wikipedia.org/wiki/Idempotence[idempotency]
 
 ----
-snmp-server community ansible-test RO
+ansible-navigator run resource.yml --mode stdout
 ----
 
-Use code-server to open the `playbook.yml` file to add the command:
+The output will look similar to the following:
 
-Make sure to save the playbook.yml with the change.
+image::https://github.com/IPvSean/pictures_for_github/blob/master/playbook_output_lab_4_part2.png?raw=true[picture of playbook output]
 
-== Step 3 - Use check mode
+As you can see in the output, the first time the playbook ran we saw a status of ok=1 and changed=1. This is due to the SNMP configuration being set on the cisco host.
 
-This time however, instead of running the playbook to push the change to the device, execute it using the --check flag in combination with the -v or verbose mode flag:
+When the playbook runs a second time, you see an output of ok=1 change=0. This is due to the idempotency of the playbook. This means that even though the playbook was run a 2nd time, the changes have been already set thus there was no need for the playbook to make any changes (changed=0).
 
-----
-ansible-navigator run playbook.yml --mode stdout --check -v
-----
+=== Step 3 - Verify SNMP configuration
 
-The `--check mode` in combination with the `--verbose` flag will display the exact changes that will be deployed to the end device without actually pushing the change. This is a great technique to validate the changes you are about to push to a device before pushing it.
+Login to an Cisco switch and verify the current SNMP configuration.
 
-== Step 4 - Verify configuration is not present
-
-Verify that the Ansible Playbook did not apply the ansible-test community. Login to `cisco` and check the running configuration on the Cisco IOS-XE device.
-
-----
-ssh cisco
-show run | i snmp
-----
-
-The output should look like the following:
-----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
-----
-
-== Step 5 - Re-run the Ansible Playbook
-
-Finally re-run this playbook again without the -v or --check flag to push the changes.
-
-----
-ansible-navigator run playbook.yml --mode stdout
-----
-
-== Step 6 - Verify Config is present
+From the control node terminal, you can `ssh cisco`
 
 ----
 ssh cisco
 ----
 
-Feel free to cut and paste the following command.
+Use the command `show snmp` to examine the SNMP configuration:
 
 ----
-sh run | i snmp
+show snmp
 ----
 
-The output should look like the following:
+You will have output similar to the following:
 
 ----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
-snmp-server community ansible-test RO
+cisco#show snmp
+Chassis: 99SDJQ9I6WK
+Location: Durham
+0 SNMP packets input
+    0 Bad SNMP version errors
+    0 Unknown community name
+    0 Illegal operation for community name supplied
+    0 Encoding errors
+    0 Number of requested variables
+    0 Number of altered variables
+    0 Get-request PDUs
+    0 Get-next PDUs
+    0 Set-request PDUs
+    0 Input queue packet drops (Maximum queue size 1000)
+0 SNMP packets output
+    0 Too big errors (Maximum packet size 500)
+    0 No such name errors
+    0 Bad values errors
+    0 General errors
+    0 Response PDUs
+    0 Trap PDUs
+Packets currently in SNMP process input queue: 0
+SNMP global trap: disabled
+
+SNMP logging: disabled
 ----
 
+Use the `show run | s snmp` to examine the SNMP running-confgiuration on the Cisco device:
 
-== Takeaways
+----
+show run | s snmp
+----
 
-* The config (e.g. `cisco.ios.config`) modules are idempotent, meaning they are stateful
-* *check mode* ensures the Ansible Playbook does not make any changes on the remote systems
-* *verbose mode* allows us to see more output to the terminal window, including which commands would be applied
-* This Ansible Playbook could be scheduled in *Automation controller* to enforce the configuration. For example this could mean the Ansible Playbook could be run once a day for a particular network. In combination with *check mode* this could just be a read only Ansible Playbook that sees and reports if configuration is missing or modified on the network.
+The output will be simlar to the following:
 
-*--Complete--*
+----
+cisco#show run | s snmp
+snmp-server community Durham-community RW acl_uq
+snmp-server community ChapelHill-community RW acl_uq
+snmp-server packetsize 500
+snmp-server location Durham
+----
+
+As you can see, the resource module configured the Cisco IOS-XE network device with the supplied configuration. There are now two total SNMP communities.
+
+=== Complete
+
+You have completed challenge 3!
