@@ -124,7 +124,7 @@ ansible-navigator:
     - /home/$USER/hosts
   execution-environment:
     container-engine: podman
-    image: network-ee:stable-2.12
+    image: quay.io/acme_corp/network-ee
     enabled: True
     pull-policy: never
 
