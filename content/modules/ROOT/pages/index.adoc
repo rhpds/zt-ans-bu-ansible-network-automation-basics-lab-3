@@ -1,21 +1,14 @@
-:lab_name: Network automation basics: Resource modules
+= {lab_name}
 
 
-= image:https://github.com/network-automation/networking-icons/blob/master/switches/switch_red_small.png?raw=true[] {lab_name}
-
-
-== Ansible Network Automation Basics - Resource Modules
-
-
-- **Lab Objective: Demonstration use of Ansible Resource Modules on network infrastructure**
+== Lab Objective: Demonstration use of Ansible Resource Modules on network infrastructure
 
 Ansible network resource modules simplify and standardize how you manage different network devices. Network devices separate configuration into sections (such as interfaces and VLANs) that apply to a network service.
 
 
-This exercise will cover:
+*This exercise will cover:*
 
 * Configuring SNMP on Cisco IOS
 * Building an Ansible Playbook using the link:https://docs.ansible.com/ansible/latest/collections/cisco/ios/ios_snmp_server_module.html#ansible-collections-cisco-ios-ios-snmp-server-module[cisco.ios.snmp_server module].
 * Understanding the `state: merged`
 * Understanding the `state: gathered`
-

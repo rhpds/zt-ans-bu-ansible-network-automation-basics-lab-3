@@ -1,12 +1,10 @@
 #!/bin/bash
 
-tee /home/rhel/resource.yml << EOF
-
+su - $USER -c 'cat >/home/rhel/resource.yml << EOF
 ---
 - name: configure SNMP
   hosts: cisco
   gather_facts: false
-
   tasks:
 
     - name: use snmp resource module
@@ -23,7 +21,6 @@ tee /home/rhel/resource.yml << EOF
               name: ChapelHill-community
               rw: true   
 
-
 EOF
-
+cat /home/rhel/resource.yml'
 

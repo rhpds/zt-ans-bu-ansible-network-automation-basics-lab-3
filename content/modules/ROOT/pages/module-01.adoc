@@ -1,95 +1,92 @@
-
 = Verify SNMP configuration
 
-== For this challenge we will verify the existing configuration on the Cisco
+For this challenge we will verify the existing configuration on the Cisco
 
-=== Modules
+== Modules
 
-Modules do the actual work in Ansible, they are what gets executed in each playbook task.
-
-* Typically written in Python (but not limited to it)
-* Modules can be idempotent
-* Modules take user input in the form of parameters
-
+* Modules do the actual work in Ansible, they are what gets executed in each playbook task.
++
+** Typically written in Python (but not limited to it)
+** Modules can be idempotent
+** Modules take user input in the form of parameters
++
 image::https://github.com/IPvSean/pictures_for_github/blob/master/resource_module.png?raw=true[picture of task]
 
-=== Network modules
+== Network modules
 
-Ansible modules for network automation typically references the vendor OS followed by the module name.
+* Ansible modules for network automation typically references the vendor OS followed by the module name.
 
----
+** namespace.collection.`facts`
+** namespace.collection.`command`
+** namespace.collection.`config`
+** namespace.collection.`resource`
 
-* namespace.collection.`facts`
-* namespace.collection.`command`
-* namespace.collection.`config`
-* namespace.collection.`resource`
 
----
+* Examples of network vendors:
 
-.Examples of network vendors:
+** Arista EOS = `arista.eos`
+** Cisco IOS/IOS-XE = `cisco.ios`
+** Cisco NX-OS = `cisco.nxos`
+** Cisco IOS-XR = `cisco.iosxr`
+** F5 BIG-IP = `f5networks.f5_bigip_bigip`
+** Juniper Junos = `junipsnetworks.junos`
+** VyOS = `vyos.vyos`
 
-* Arista EOS = `arista.eos`
-* Cisco IOS/IOS-XE = `cisco.ios`
-* Cisco NX-OS = `cisco.nxos`
-* Cisco IOS-XR = `cisco.iosxr`
-* F5 BIG-IP = `f5networks.f5_bigip_bigip`
-* Juniper Junos = `junipsnetworks.junos`
-* VyOS = `vyos.vyos`
 
-.Network Automation Module
+* Network Automation Module
++
 image::https://github.com/IPvSean/pictures_for_github/blob/master/resrouce_modules_slide.png?raw=true[]
 
-.Network Automation Module
+
+* Network Automation Module
++
 image::https://github.com/IPvSean/pictures_for_github/blob/master/resrouce_modules_slide2.png?raw=true[]
 
-=== Lets get started
+== Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
+// Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
 
 
 === Step 1 - Verify SNMP configuration
 
 Login to an Cisco IOS router and verify the current SNMP configuration.
 
-* From the control node terminal, you can `ssh cisco` and type `enable`
-
+* From the terminal, you can `ssh cisco` and type `enable`
++
 [source,bash]
 ----
 ssh cisco
 ----
 
-Use the command `show snmp` to examine the SNMP configuration (SNMP should say agent not available):
-
+* Use the command `show snmp` to examine the SNMP configuration (SNMP should say agent not available):
++
+[source,bash]
 ----
 show snmp
 ----
-
-It will show output similar to the following:
-
-[source,bash]
++
+.It will show output similar to the following:
 ----
-cisco# show snmp
 %SNMP agent not enabled
 ----
 
-Use the `show run | s snmp` to examine the SNMP running-configuration on the Cisco device. When running this command expect no output as there is no running SNMP configuration.
-
+* Use the `show run | s snmp` to examine the SNMP running-configuration on the Cisco device. When running this command expect no output as there is no running SNMP configuration.
++
+[source,bash]
 ----
 show run | s snmp
 ----
++
+.It will show output similar to the following:
+----
 
-It will show output similar to the following:
+----
 
+* Exit the router CLI to complete the challenge.
++
 [source,bash]
-----
-cisco#sh run | s snmp
-cisco#
-----
-
-Exit the router CLI to complete the challenge.
-
 ----
 exit
 ----

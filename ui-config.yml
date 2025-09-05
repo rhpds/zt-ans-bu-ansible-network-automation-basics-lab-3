@@ -14,7 +14,7 @@ antora:
       solveButton: true
     - name: module-03
       label: "execute-resource-playbook"
-      solveButton: false
+      solveButton: true
     - name: module-04
       label: "gathered-parameter"
       solveButton: false

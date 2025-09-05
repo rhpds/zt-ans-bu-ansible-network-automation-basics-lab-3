@@ -1,12 +1,10 @@
 #!/bin/bash
 
-tee /home/rhel/solve_challenege_3.yml << EOF
-
+su - $USER -c 'cat >/tmp/setup-scripts/solve_challenege_3.yml << EOF
 ---
 - name: configure SNMP
   hosts: cisco
   gather_facts: false
-
   tasks:
 
     - name: use snmp resource module
@@ -23,6 +21,5 @@ tee /home/rhel/solve_challenege_3.yml << EOF
               name: ChapelHill-community
               rw: true  
 EOF
-
-
-su - rhel -c 'ansible-navigator run /home/rhel/solve_challenege_3.yml --mode stdout'
+cat /tmp/setup-scripts/solve_challenege_3.yml'
+su - rhel -c 'ansible-navigator run /tmp/setup-scripts/solve_challenege_3.yml --mode stdout'
