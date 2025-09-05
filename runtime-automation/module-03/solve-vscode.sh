@@ -1,5 +1,7 @@
 #!/bin/bash
 
+USER=rhel
+
 su - $USER -c 'cat >/tmp/setup-scripts/solve_challenege_3.yml << EOF
 ---
 - name: configure SNMP
@@ -21,4 +23,4 @@ su - $USER -c 'cat >/tmp/setup-scripts/solve_challenege_3.yml << EOF
               rw: true  
 EOF
 cat /tmp/setup-scripts/solve_challenege_3.yml'
-su - rhel -c 'ansible-navigator run /tmp/setup-scripts/solve_challenege_3.yml --mode stdout'
+su - $USER -c 'ansible-navigator run /tmp/setup-scripts/solve_challenege_3.yml --mode stdout'

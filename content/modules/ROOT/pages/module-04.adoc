@@ -75,7 +75,7 @@ image::https://github.com/IPvSean/pictures_for_github/blob/master/gathered_outpu
 === Step 3 - Examine the files
 
 * Open the newly created files that gathered the SNMP configuration from the Cisco network device(s).
-
++
 TIP: The files were stored under the device name: `~/cisco_snmp.yml`.
 
 === Takeaways

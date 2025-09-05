@@ -1,5 +1,7 @@
 #!/bin/bash
 
+USER=rhel
+
 su - $USER -c 'cat >/home/rhel/resource.yml << EOF
 ---
 - name: configure SNMP

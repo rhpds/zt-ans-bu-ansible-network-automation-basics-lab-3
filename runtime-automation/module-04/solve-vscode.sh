@@ -1,7 +1,8 @@
 #!/bin/bash
 
+USER=rhel
+
 su - $USER -c 'cat >/home/rhel/gathered.yml << EOF
----
 ---
 - name: retrieve SNMP config
   hosts: cisco
@@ -20,4 +21,4 @@ su - $USER -c 'cat >/home/rhel/gathered.yml << EOF
 
 EOF
 cat /home/rhel/gathered.yml'
-su - rhel -c 'ansible-navigator run /home/rhel/gathered.yml --mode stdout'
+su - $USER -c 'ansible-navigator run /home/rhel/gathered.yml --mode stdout'
