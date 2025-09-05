@@ -81,7 +81,7 @@ show run | s snmp
 +
 .It will show output similar to the following:
 ----
-
+cisco#
 ----
 
 * Exit the router CLI to complete the challenge.

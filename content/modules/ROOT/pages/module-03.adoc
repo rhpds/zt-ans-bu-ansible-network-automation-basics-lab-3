@@ -1,70 +1,75 @@
 = Execute the Ansible Playbook
 
-== Learn how to use facts with the debug module
-
+* Running an Ansible Playbook
++
 image::https://github.com/IPvSean/pictures_for_github/blob/master/ansible-navigator.png?raw=true[picture of ansible-navigator]
 
++
 https://docs.google.com/presentation/d/1F-nc9dKXemdD5FJXNQoaEZzp_eADTSDKpXLLu4jYapI/edit?usp=sharing
 
+* Ansible Navigator
++
+image:https://github.com/IPvSean/pictures_for_github/blob/master/ansible-navigator-2.png?raw=true[2nd picture of ansible-navigator]
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/ansible-navigator-2.png?raw=true[2nd picture of ansible-navigator]
-
-=== Lets get started
+== Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
+// Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
 
-=== Step 1
+=== Step 1 - Execute the Ansible Playbook
 
-Switch to the Terminal tab so you can execute your Ansible Playbook.
+* Switch to the Terminal tab so you can execute your Ansible Playbook.
 
-=== Step 2 - Execute the Ansible Playbook
 
-Execute the playbook using the `ansible-navigator run`. Since there is just one task we can use the --mode stdout
-
+* Execute the playbook using the `ansible-navigator run`. Since there is just one task we can use the --mode stdout
++
+[source,bash]
 ----
 ansible-navigator run resource.yml --mode stdout
 ----
 
-The output will look similar to the following:
-
++
+.The output will look similar to the following:
 image::https://github.com/IPvSean/pictures_for_github/blob/master/playbook_output_lab_4.png?raw=true[picture of playbook output]
 
-Re-running the playbook will demonstrate the concept of https://en.wikipedia.org/wiki/Idempotence[idempotency]
-
+* Re-running the playbook will demonstrate the concept of https://en.wikipedia.org/wiki/Idempotence[idempotency]
++
+[source,bash]
 ----
 ansible-navigator run resource.yml --mode stdout
 ----
-
-The output will look similar to the following:
-
++
+.The output will look similar to the following:
 image::https://github.com/IPvSean/pictures_for_github/blob/master/playbook_output_lab_4_part2.png?raw=true[picture of playbook output]
 
+[NOTE]
+====
 As you can see in the output, the first time the playbook ran we saw a status of ok=1 and changed=1. This is due to the SNMP configuration being set on the cisco host.
 
 When the playbook runs a second time, you see an output of ok=1 change=0. This is due to the idempotency of the playbook. This means that even though the playbook was run a 2nd time, the changes have been already set thus there was no need for the playbook to make any changes (changed=0).
+====
 
-=== Step 3 - Verify SNMP configuration
+=== Step 2 - Verify SNMP configuration
 
-Login to an Cisco switch and verify the current SNMP configuration.
+* Login to an Cisco switch and verify the current SNMP configuration.
 
-From the control node terminal, you can `ssh cisco`
-
+* From the control node terminal, you can `ssh cisco`
++
+[source,bash]
 ----
 ssh cisco
 ----
 
-Use the command `show snmp` to examine the SNMP configuration:
-
+* Use the command `show snmp` to examine the SNMP configuration:
++
+[source,bash]
 ----
 show snmp
 ----
-
-You will have output similar to the following:
-
++
+.You will have output similar to the following:
 ----
-cisco#show snmp
 Chassis: 99SDJQ9I6WK
 Location: Durham
 0 SNMP packets input
@@ -91,23 +96,22 @@ SNMP global trap: disabled
 SNMP logging: disabled
 ----
 
-Use the `show run | s snmp` to examine the SNMP running-confgiuration on the Cisco device:
-
+* Use the `show run | s snmp` to examine the SNMP running-confgiuration on the Cisco device:
++
+[source,bash]
 ----
 show run | s snmp
 ----
-
-The output will be simlar to the following:
-
++
+.The output will be simlar to the following:
 ----
-cisco#show run | s snmp
 snmp-server community Durham-community RW acl_uq
 snmp-server community ChapelHill-community RW acl_uq
 snmp-server packetsize 500
 snmp-server location Durham
 ----
-
-As you can see, the resource module configured the Cisco IOS-XE network device with the supplied configuration. There are now two total SNMP communities.
++
+NOTE: As you can see, the resource module configured the Cisco IOS-XE network device with the supplied configuration. There are now two total SNMP communities.
 
 === Complete
 
