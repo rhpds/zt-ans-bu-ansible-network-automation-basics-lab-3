@@ -1,40 +1,40 @@
 
 = Using the gathered parameter
 
-== learn how to use the gathered parameter with a resource module
-
+* Learn how to use the gathered parameter with a resource module
++
 image::https://github.com/IPvSean/pictures_for_github/blob/master/gathered_note.png?raw=true[state gathered picture]
 
-=== Example of state gathered
-
+* Example of state gathered
++
+[source,yaml]
 ----
     - name: use SNMP resource module
       cisco.ios.snmp_server:
         state: gathered
       register: snmp_config
 ----
-
++
 We are reading in the configuration with the `state: gathered` (versus applying it to the network device), and we are using the register to save the output from the module into a variable named snmp_config
 
-=== Lets get started
+== Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
+// Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align="left"] in the bottom right corner of this window.
 
 === Step 1 - Create the gathered playbook
 
-Create a new playbook named `gathered.yml` in the code-server tab.
-
+* Create a new playbook named `gathered.yml` in the code-server tab.
++
 (You may need to drag the instruction pane to be larger)
-
++
 [source,yaml]
 ----
 ---
 - name: retrieve SNMP config
   hosts: cisco
   gather_facts: false
-
   tasks:
 
     - name: use SNMP resource module
@@ -48,31 +48,35 @@ Create a new playbook named `gathered.yml` in the code-server tab.
         dest: "{{ playbook_dir }}/{{ inventory_hostname }}_snmp.yml"
 ----
 
-The first task is identical except the `state: merged` has been switched to `gathered`, the config is no longer needed since we are reading in the configuration (versus applying it to the network device), and we are using the register to save the output from the module into a variable named snmp_config
++
+[NOTE]
+====
+* The first task is identical except the `state: merged` has been switched to `gathered`, the config is no longer needed since we are reading in the configuration (versus applying it to the network device), and we are using the register to save the output from the module into a variable named snmp_config
 
-The second task is copying the `snmp_config` variable to a flat-file. The double curly brackets denotes that this is a variable.
+* The second task is copying the `snmp_config` variable to a flat-file. The double curly brackets denotes that this is a variable.
 
-The `| to_nice_yaml` is a filter, that will transform the JSON output (default) to YAML.
+* The `| to_nice_yaml` is a filter, that will transform the JSON output (default) to YAML.
 
-The `playbook_dir` and `inventory_hostname` are special variables also referred to as magic variables. The `playbook_dir` simply means the directory we executed the playbook from, and the inventory_hostname is the name of the device in our inventory. This means the file will be saved as `/home/rhel/cisco_snmp.yml` for the cisco device.
+* The `playbook_dir` and `inventory_hostname` are special variables also referred to as magic variables. The `playbook_dir` simply means the directory we executed the playbook from, and the inventory_hostname is the name of the device in our inventory. This means the file will be saved as `/home/rhel/cisco_snmp.yml` for the cisco device.
+====
 
 === Step 2 - Execute the gathered playbook
 
-Execute the playbook using the `ansible-navigator run`.  Go to the terminal tab to run the `ansible-navigator run` command.
-
+* Execute the playbook using the `ansible-navigator run`.  Go to the terminal tab to run the `ansible-navigator run` command.
++
+[source,bash]
 ----
 ansible-navigator run gathered.yml --mode stdout
 ----
-
-The output will look similar to the following:
-
++
+.The output will look similar to the following:
 image::https://github.com/IPvSean/pictures_for_github/blob/master/gathered_output.png?raw=true[picture of output]
 
 === Step 3 - Examine the files
 
-Open the newly created files that gathered the SNMP configuration from the Cisco network device(s).
+* Open the newly created files that gathered the SNMP configuration from the Cisco network device(s).
 
-The files were stored under the device name: `~/cisco_snmp.yml`.
+TIP: The files were stored under the device name: `~/cisco_snmp.yml`.
 
 === Takeaways
 

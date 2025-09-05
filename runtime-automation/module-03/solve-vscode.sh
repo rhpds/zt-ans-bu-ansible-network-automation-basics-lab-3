@@ -6,7 +6,6 @@ su - $USER -c 'cat >/tmp/setup-scripts/solve_challenege_3.yml << EOF
   hosts: cisco
   gather_facts: false
   tasks:
-
     - name: use snmp resource module
       cisco.ios.snmp_server:
         state: merged          

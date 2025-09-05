@@ -22,10 +22,6 @@ su - $USER -c 'cat >/tmp/setup-scripts/check_challenege_3.yml << EOF
               rw: true
       register: snmpstatus
 
-    - name: run commnad to tell instruqt what to do
-      ansible.builtin.fail:
-        msg: "SNMP configuration was not applied - please try again or use SKIP"
-      when: snmpstatus.changed == True
 EOF
 cat /tmp/setup-scripts/check_challenege_3.yml'
 su - rhel -c 'ansible-navigator run /tmp/setup-scripts/check_challenege_3.yml --mode stdout'

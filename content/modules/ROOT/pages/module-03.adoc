@@ -43,6 +43,7 @@ ansible-navigator run resource.yml --mode stdout
 .The output will look similar to the following:
 image::https://github.com/IPvSean/pictures_for_github/blob/master/playbook_output_lab_4_part2.png?raw=true[picture of playbook output]
 
++
 [NOTE]
 ====
 As you can see in the output, the first time the playbook ran we saw a status of ok=1 and changed=1. This is due to the SNMP configuration being set on the cisco host.
@@ -112,6 +113,13 @@ snmp-server location Durham
 ----
 +
 NOTE: As you can see, the resource module configured the Cisco IOS-XE network device with the supplied configuration. There are now two total SNMP communities.
+
+* Exit the router CLI to complete the challenge.
++
+[source,bash]
+----
+exit
+----
 
 === Complete
 
