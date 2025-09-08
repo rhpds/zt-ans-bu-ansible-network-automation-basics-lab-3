@@ -66,7 +66,7 @@ ansible-navigator:
     enabled: true
     image: quay.io/acme_corp/network-ee
     pull:
-      policy: never
+      policy: missing
   logging:
     level: debug
   playbook-artifact:
