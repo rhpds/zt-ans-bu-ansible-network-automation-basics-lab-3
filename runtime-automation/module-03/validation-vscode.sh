@@ -24,7 +24,7 @@ su - $USER -c 'cat >/tmp/setup-scripts/check_challenege_3.yml << EOF
 
 EOF
 cat /tmp/setup-scripts/check_challenege_3.yml'
-su - rhel -c 'ansible-navigator run /tmp/setup-scripts/check_challenege_3.yml --mode stdout'
+su - $USER -c  'ansible-navigator run /tmp/setup-scripts/check_challenege_3.yml --mode stdout'
 
 if [ $? -eq 0 ]; then
     echo OK

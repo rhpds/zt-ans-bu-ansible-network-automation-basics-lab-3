@@ -20,6 +20,7 @@ su - $USER -c 'cat >/home/rhel/.config/code-server/config.yaml << EOF
 bind-addr: 0.0.0.0:8080
 auth: none
 cert: false
+disable-update-check: true
 EOF'
 
 su - $USER -c 'cat >/home/$USER/.local/share/code-server/User/settings.json <<EOL
@@ -44,7 +45,13 @@ su - $USER -c 'cat >/home/$USER/.local/share/code-server/User/settings.json <<EO
   "files.exclude": {
     "**/.*": true
   },
-  "security.workspace.trust.enabled": false
+  "security.workspace.trust.enabled": false,
+  "redhat.telemetry.enabled": false,
+  "ansibleLint.enabled": false,
+  "ansible.validation.lint.enabled": false,
+  "ansible.validation.enabled": false,
+  "ansible.lightspeed.enabled": false,
+  "ansible.lightspeed.suggestions.enabled": false
 }
 EOL
 cat /home/$USER/.local/share/code-server/User/settings.json'
@@ -100,6 +107,7 @@ host_key_checking = False
 collections_on_ansible_version_mismatch = ignore
 retry_files_enabled = False
 interpreter_python = auto_silent
+
 [persistent_connection]
 connect_timeout = 200
 command_timeout = 200
