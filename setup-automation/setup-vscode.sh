@@ -45,6 +45,9 @@ su - $USER -c 'cat >/home/$USER/.local/share/code-server/User/settings.json <<EO
   "files.exclude": {
     "**/.*": true
   },
+  "files.watcherExclude": {
+    "**": true
+  },
   "security.workspace.trust.enabled": false,
   "redhat.telemetry.enabled": false,
   "ansibleLint.enabled": false,
