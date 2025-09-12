@@ -48,6 +48,9 @@ su - $USER -c 'cat >/home/$USER/.local/share/code-server/User/settings.json <<EO
   "files.watcherExclude": {
     "**": true
   },
+  "files.watcherExclude": {
+    "**": true
+  },
   "security.workspace.trust.enabled": false,
   "redhat.telemetry.enabled": false,
   "ansibleLint.enabled": false,
@@ -55,6 +58,7 @@ su - $USER -c 'cat >/home/$USER/.local/share/code-server/User/settings.json <<EO
   "ansible.validation.enabled": false,
   "ansible.lightspeed.enabled": false,
   "ansible.lightspeed.suggestions.enabled": false
+  "python.useEnvironmentsExtension": false
 }
 EOL
 cat /home/$USER/.local/share/code-server/User/settings.json'
@@ -74,7 +78,7 @@ ansible-navigator:
   execution-environment:
     container-engine: podman
     enabled: true
-    image: quay.io/acme_corp/network-ee
+    image: ee-supported-rhel8
     pull:
       policy: missing
   logging:

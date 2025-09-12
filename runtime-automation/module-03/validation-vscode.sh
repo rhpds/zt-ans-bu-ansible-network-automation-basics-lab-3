@@ -1,4 +1,5 @@
 #!/bin/bash
+USER=rhel
 
 su - $USER -c 'cat >/tmp/setup-scripts/check_challenege_3.yml << EOF
 ---

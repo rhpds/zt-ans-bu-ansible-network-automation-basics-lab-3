@@ -2,7 +2,7 @@
 
 USER=rhel
 
-su - $USER -c 'cat >/tmp/setup-scripts/solve_challenege_3.yml << EOF
+su - $USER -c 'cat >/home/rhel/resource.yml << EOF
 ---
 - name: configure SNMP
   hosts: cisco
@@ -20,7 +20,8 @@ su - $USER -c 'cat >/tmp/setup-scripts/solve_challenege_3.yml << EOF
               rw: true
             - acl_v4: acl_uq
               name: ChapelHill-community
-              rw: true  
+              rw: true
+
 EOF
-cat /tmp/setup-scripts/solve_challenege_3.yml'
-su - $USER -c 'ansible-navigator run /tmp/setup-scripts/solve_challenege_3.yml --mode stdout'
+cat /home/rhel/resource.yml'
+su - $USER -c 'ansible-navigator run /home/rhel/resource.yml --mode stdout'
